@@ -45,6 +45,10 @@ def criarquestao(request):
 
 
 def inserirquestao(request):
+
+    if not request.POST['questao_texto']:
+        return render(request, 'votacao/criarquestao.html', {'error_message': 'Preencha o campo antes de submeter.'})
+    else:
         Questao(questao_texto=request.POST['questao_texto'], pub_data=timezone.now()).save()
         return HttpResponseRedirect(reverse('votacao:index'))
 
@@ -55,9 +59,13 @@ def criaropcao(request, questao_id):
 
 
 def inseriropcao(request, questao_id):
-    question = Questao.objects.get(pk=questao_id)
-    question.opcao_set.create(opcao_texto=request.POST['opcao_texto'], votos=0)
-    return HttpResponseRedirect(reverse('votacao:index'))
+    if not request.POST['opcao_texto']:
+        questao = get_object_or_404(Questao, pk=questao_id)
+        return render(request, 'votacao/criaropcao.html', {'questao': questao, 'error_message': 'Preencha o campo antes de submeter.'})
+    else:
+        question = Questao.objects.get(pk=questao_id)
+        question.opcao_set.create(opcao_texto=request.POST['opcao_texto'], votos=0)
+        return HttpResponseRedirect(reverse('votacao:index'))
 
 
 

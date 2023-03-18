@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Votações</title>
+</head>
+<body>
+<h1>ISCTE - Instituto Universitário de Lisboa</h1>
+
 {% if latest_question_list %}
 <ul>
     {% for questao in latest_question_list %}
@@ -15,3 +24,8 @@
 <a href="{% url 'votacao:criarquestao' %}">
     <input type="button" value="Criar nova questao">
 </a>
+
+
+
+</body>
+</html>

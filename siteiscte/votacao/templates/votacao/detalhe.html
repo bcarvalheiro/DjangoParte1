@@ -1,4 +1,13 @@
-<h1> {{ questao.questao_texto }}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pergunta</title>
+</head>
+<body>
+<h1>ISCTE - Instituto Universitário de Lisboa</h1>
+
+<h2> {{ questao.questao_texto }}</h2>
 {% if error_message %}
     <p><strong>{{error_message}}</strong></p>
 {% endif %}
@@ -14,6 +23,16 @@
     {% endfor %}
     <input type="submit" value="Voto"/>
 </form>
+<br>
 <a href="{% url 'votacao:criaropcao' questao.id %}">
     <input type="button" value="Criar nova opção">
 </a>
+
+<a href="{% url 'votacao:index' %}">
+    <input type="button" value="Voltar">
+</a>
+
+
+
+</body>
+</html>

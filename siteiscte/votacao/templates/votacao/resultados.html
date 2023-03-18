@@ -1,7 +1,23 @@
-<h1>{{questao.questao_texto}}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados da Votação</title>
+</head>
+<body>
+<h1>ISCTE - Instituto Universitário de Lisboa</h1>
+<h2>{{questao.questao_texto}}</h2>
 <ul>
     {% for opcao in questao.opcao_set.all %}
     <li>{{opcao.opcao_texto}} -- {{opcao.votos}} voto{{opcao.votos|pluralize}}</li>
     {% endfor %}}
 </ul>
 <a href="{% url 'votacao:detalhe' questao.id %}"> Votar novamente? </a>
+
+<a href="{% url 'votacao:index' %}">
+    <input type="button" value="Voltar">
+</a>
+
+
+</body>
+</html>

@@ -1,5 +1,19 @@
-<h1>Criar nova opção</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Opção</title>
+</head>
+<body>
+
+<h1>ISCTE - Instituto Universitário de Lisboa</h1>
+<h2>Criar nova opção</h2>
 Questão : {{ questao.questao_texto }}
+
+{% if error_message %}
+    <p><strong>{{error_message}}</strong></p>
+{% endif %}
+
 <form class="criaropcao"  method="post" action="{% url 'votacao:inseriropcao' questao.id %}">
   {% csrf_token %}
 <fieldset>
@@ -8,3 +22,10 @@ Questão : {{ questao.questao_texto }}
   <input type="submit" value="Inserir">
 </fieldset>
 </form>
+
+<a href="{% url 'votacao:index' %}">
+    <input type="button" value="Voltar">
+</a>
+
+</body>
+</html>
