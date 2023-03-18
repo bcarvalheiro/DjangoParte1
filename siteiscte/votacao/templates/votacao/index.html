@@ -1,0 +1,17 @@
+{% if latest_question_list %}
+<ul>
+    {% for questao in latest_question_list %}
+    <li>
+        <a href="{% url 'votacao:detalhe' questao.id %}">
+            {{ questao.questao_texto }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}}
+<p>Não há questões a apresentar</p>
+{% endif %}
+
+<a href="{% url 'votacao:criarquestao' %}">
+    <input type="button" value="Criar nova questao">
+</a>

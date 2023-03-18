@@ -1,0 +1,9 @@
+<h1>Criar nova questão</h1>
+<form class="criarquestao"  method="post" action="{% url 'votacao:inserirquestao' %}"  target="_self">
+  {% csrf_token %}
+<fieldset>
+  <label for="questao_texto">Texto da nova questão</label><br>
+  <input type="text" id="questao_texto" name="questao_texto" value=""><br>
+  <input type="submit" value="Submit">
+</fieldset>
+</form>

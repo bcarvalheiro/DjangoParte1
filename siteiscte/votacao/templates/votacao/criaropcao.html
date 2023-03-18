@@ -1,0 +1,10 @@
+<h1>Criar nova opção</h1>
+Questão : {{ questao.questao_texto }}
+<form class="criaropcao"  method="post" action="{% url 'votacao:inseriropcao' questao.id %}">
+  {% csrf_token %}
+<fieldset>
+  <label for="opcao_texto">Texto da nova opção</label><br>
+  <input type="text" id="opcao_texto" name="opcao_texto" value=""><br>
+  <input type="submit" value="Inserir">
+</fieldset>
+</form>
