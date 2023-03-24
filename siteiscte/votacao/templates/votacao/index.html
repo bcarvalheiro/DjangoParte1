@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <title>Votações</title>
 </head>
-<body>
 <h1>ISCTE - Instituto Universitário de Lisboa</h1>
+{% csrf_token %}
+{% if request.session.userid %}
+    <p> Bem-vindo, <a href="{% url 'votacao:dashboard' %}"> {{ request.session.userid }}</a>, já votaste-te <b>{{ userPage.aluno.votos }}</b> vezes </p>
+{% else %}
+    <p> Not logged</p>
+{% endif %}
+
 
 {% if latest_question_list %}
 <ul>
@@ -17,13 +23,32 @@
     </li>
     {% endfor %}
 </ul>
-{% else %}}
+{% else %}
 <p>Não há questões a apresentar</p>
 {% endif %}
 
-<a href="{% url 'votacao:criarquestao' %}">
+
+
+
+
+
+
+
+{% if request.session.userid %}
+    <a href="{% url 'votacao:logout' %}">
+    <input type="button" value="Logout">
+    </a>
+    <a href="{% url 'votacao:criarquestao' %}">
     <input type="button" value="Criar nova questao">
-</a>
+    </a>
+{% else %}
+    <a href="{% url 'votacao:login' %}">
+    <input type="button" value="Login">
+    </a>
+    <a href="{% url 'votacao:novouser' %}">
+    <input type="button" value="Registar">
+    </a>
+{% endif %}
 
 
 

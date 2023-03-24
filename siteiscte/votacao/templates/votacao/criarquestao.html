@@ -12,7 +12,7 @@
     <p><strong>{{error_message}}</strong></p>
 {% endif %}
 
-<form class="criarquestao"  method="post" action="{% url 'votacao:inserirquestao' %}"  target="_self">
+<form class="criarquestao"  method="post" action="{% url 'votacao:criarquestao' %}"  target="_self">
   {% csrf_token %}
 <fieldset>
   <label for="questao_texto">Texto da nova questão</label><br>

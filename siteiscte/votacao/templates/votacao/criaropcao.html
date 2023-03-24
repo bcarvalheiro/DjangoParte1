@@ -14,12 +14,12 @@ Questão : {{ questao.questao_texto }}
     <p><strong>{{error_message}}</strong></p>
 {% endif %}
 
-<form class="criaropcao"  method="post" action="{% url 'votacao:inseriropcao' questao.id %}">
+<form class="criaropcao"  method="post" action="{% url 'votacao:criaropcao' questao.id %}">
   {% csrf_token %}
 <fieldset>
-  <label for="opcao_texto">Texto da nova opção</label><br>
+  <label for="opcao_texto">Texto da nova Opção:</label><br>
   <input type="text" id="opcao_texto" name="opcao_texto" value=""><br>
-  <input type="submit" value="Inserir">
+  <input type="submit" value="Gravar nova Opção">
 </fieldset>
 </form>
 
