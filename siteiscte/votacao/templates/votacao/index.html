@@ -7,7 +7,7 @@
 <h1>ISCTE - Instituto Universitário de Lisboa</h1>
 {% csrf_token %}
 {% if request.session.userid %}
-    <p> Bem-vindo, <a href="{% url 'votacao:dashboard' %}"> {{ request.session.userid }}</a>, já votaste-te <b>{{ userPage.aluno.votos }}</b> vezes </p>
+    <p> Bem-vindo, <a href="{% url 'votacao:dashboard' %}"> {{ request.session.userid }}</a>, já votaste-te <b>{{ aluno.votos }}</b> vezes </p>
 {% else %}
     <p> Not logged</p>
 {% endif %}
@@ -26,13 +26,6 @@
 {% else %}
 <p>Não há questões a apresentar</p>
 {% endif %}
-
-
-
-
-
-
-
 
 {% if request.session.userid %}
     <a href="{% url 'votacao:logout' %}">
