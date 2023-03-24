@@ -48,14 +48,20 @@ def voto(request,questao_id):
     return HttpResponseRedirect(reverse('votacao:resultados', args=(questao_id,)))
 def criarquestao(request):
     if request.method == 'POST':
-        if not request.POST['questao_texto']:
-            return render(request, 'votacao/criarquestao.html',
-                          {'error_message': 'Preencha o campo antes de submeter.'})
+        userid = request.user.username
+        userPage = User.objects.get(username=userid)
+        if userPage.is_superuser:
+            if not request.POST['questao_texto']:
+                return render(request, 'votacao/criarquestao.html',
+                              {'error_message': 'Preencha o campo antes de submeter.'})
+            else:
+                Questao(questao_texto=request.POST['questao_texto'], pub_data=timezone.now()).save()
+                return HttpResponseRedirect(reverse('votacao:index'))
         else:
-            Questao(questao_texto=request.POST['questao_texto'], pub_data=timezone.now()).save()
-            return HttpResponseRedirect(reverse('votacao:index'))
+            return render(request, 'votacao/criarquestao.html',
+                          {'error_message': 'Apenas administradores podem criar questões.'})
     else:
-        return render(request, 'votacao/criarquestao.html')
+            return render(request, 'votacao/criarquestao.html')
 
 
 def eliminar(request, questao_id):
@@ -64,6 +70,7 @@ def eliminar(request, questao_id):
 
 def criaropcao(request, questao_id):
     if request.method == 'POST':
+
         if not request.POST['opcao_texto']:
             questao = get_object_or_404(Questao, pk=questao_id)
             return render(request, 'votacao/criaropcao.html', {'questao': questao, 'error_message': 'Preencha o campo antes de submeter.'})
@@ -75,16 +82,24 @@ def criaropcao(request, questao_id):
         questao = get_object_or_404(Questao, pk=questao_id)
         return render(request, 'votacao/criaropcao.html', {'questao': questao})
 
+def eliminaropcao(request, questao_id, opcao_id):
+    Opcao.objects.filter(id=opcao_id).delete()
+    question = get_object_or_404(Questao, pk=questao_id)
+    return render(request, 'votacao/detalhe.html', {'questao': question})
+
 def login(request):
+    latest_question_list = Questao.objects.order_by('-pub_data')
     if request.method == 'POST':
         try:
             password = request.POST['password']
             userid = request.POST['username']
             user = authenticate(username=userid, password=password)
             if user is not None:
-                auth_login(request,user)
+                userPage = User.objects.get(username=userid)
+                context = {'latest_question_list': latest_question_list, 'userPage': userPage}
+                auth_login(request, user)
                 request.session['userid'] = user.username
-                return HttpResponseRedirect(reverse('votacao:index'))
+                return render(request, 'votacao/index.html', context)
             else:
                 return render(request, 'votacao/login.html')
         except KeyError:

@@ -20,6 +20,7 @@ urlpatterns = [
     path('dashboard', views.dashboard, name='dashboard'),
     path('novouser', views.novouser, name='novouser'),
     path('logout', views.logout, name='logout'),
-    path('<int:questao_id>/eliminar', views.eliminar, name='eliminar')
+    path('<int:questao_id>/eliminar', views.eliminar, name='eliminar'),
+    path('<int:questao_id>/eliminaropcao/<int:opcao_id>', views.eliminaropcao, name='eliminaropcao'),
 ]
 

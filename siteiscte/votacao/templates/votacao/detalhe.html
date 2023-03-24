@@ -17,7 +17,8 @@
     {% for opcao in questao.opcao_set.all %}
         <input type= "radio" name= "opcao" id= "opcao{{ forloop.counter }}" value= "{{ opcao.id }}"/>
         <label for="opcao{{ forloop.counter }}">
-            {{ opcao.opcao_texto }}<br>
+            {{ opcao.opcao_texto }}
+            <a href="{% url 'votacao:eliminaropcao' questao.id opcao.id %}" title ="Eliminar">x</a>
         </label>
         <br/>
     {% endfor %}
