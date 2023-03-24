@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<h1>Dashboard</h1>
+    {% if userPage.is_authenticated %}
+        <form class="criaruser"  method="post" action="{% url 'votacao:index' %}">
+        {% csrf_token %}
+        <fieldset>
+          <label for="username">Username:</label><br>
+          <input type="text" id="username" name="username" value = {{ userPage }} disabled><br>
+          <label for="nome_completo">Nome completo:</label><br>
+          <input type="text" id="nome_completo" name="nome_completo" value = "{{ userPage.aluno.nome_completo }}" disabled><br>
+          <label for="email">Email:</label><br>
+          <input type="text" id="email" name="email" value = {{ userPage.email }} disabled><br>
+          <label for="grupo_trab">Grupo de Trabalho:</label><br>
+          <input type="text" id="grupo_trab" name="grupo_trab" value = {{ userPage.aluno.grupo_trab }} disabled><br>
+          <label for="curso">Curso:</label><br>
+          <input type="text" id="curso" name="curso" value = {{ userPage.aluno.curso }} disabled><br>
+          <label for="votos">Votos:</label><br>
+          <input type="text" id="votos" name="votos" value= "{{ userPage.aluno.votos }}" disabled ><br><br><br>
+          <input type="submit" value="Voltar">
+
+        <a href="{% url 'votacao:logout' %}">
+            <input type="button" value="Logout">
+        </a>
+    {% else %}
+        <p>Not logged in</p>
+        <a href="{% url 'votacao:login' %}">
+        <input type="button" value="Login">
+        </a>
+    {% endif %}
+        </fieldset>
+
+</form>
+
+
+
+</body>
+</html>

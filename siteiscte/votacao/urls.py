@@ -15,8 +15,11 @@ urlpatterns = [
     #ex:votacao/1/voto
     path('<int:questao_id>/voto', views.voto, name='voto'),
     path('criarquestao', views.criarquestao, name='criarquestao'),
-    path('inserirquestao', views.inserirquestao, name='inserirquestao'),
     path('<int:questao_id>/criaropcao', views.criaropcao, name='criaropcao'),
-    path('<int:questao_id>/inseriropcao', views.inseriropcao, name='inseriropcao'),
+    path('login', views.login, name='login'),
+    path('dashboard', views.dashboard, name='dashboard'),
+    path('novouser', views.novouser, name='novouser'),
+    path('logout', views.logout, name='logout'),
+    path('<int:questao_id>/eliminar', views.eliminar, name='eliminar')
 ]
 
