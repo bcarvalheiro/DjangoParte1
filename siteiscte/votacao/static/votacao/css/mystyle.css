@@ -1,0 +1,37 @@
+
+.logo_title{
+    font-size: 36px;
+    border-color: blue;
+    border-width: thick;
+    border-style: inset;
+}
+
+#iscte_header{
+    padding-bottom: 20px;
+    horiz-align: center;
+}
+
+.iscte_header_inline_display{
+    vertical-align: middle;
+    display: inline;
+    padding-inline: 20px ;
+    font-size: xx-large;
+}
+
+.welcome_inline_display{
+    vertical-align: middle;
+    display: inline;
+    padding-inline: 20px ;
+    font-size: large;
+
+}
+
+.link_bar{
+    padding: 20px;
+    font-size: x-large;
+    text-align: left;
+}
+
+
+
+

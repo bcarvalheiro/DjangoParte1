@@ -1,3 +1,4 @@
+from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 
 from django.shortcuts import render, get_object_or_404
@@ -173,3 +174,13 @@ def novouser(request):
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect(reverse('votacao:index'))
+
+def fazer_upload(request):
+
+    if request.method == 'POST' and request.FILES.get('myfile') is not None:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'votacao/fazer_upload.html', {'uploaded_file_url':uploaded_file_url})
+    return render(request, 'votacao/fazer_upload.html')

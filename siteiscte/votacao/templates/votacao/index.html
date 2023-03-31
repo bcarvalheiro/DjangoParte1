@@ -3,14 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Votações</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'votacao/css/mystyle.css' %}">
 </head>
-<h1>ISCTE - Instituto Universitário de Lisboa</h1>
-{% csrf_token %}
-{% if request.session.userid %}
-    <p> Bem-vindo, <a href="{% url 'votacao:dashboard' %}"> {{ request.session.userid }}</a>, já votaste-te <b>{{ aluno.votos }}</b> vezes </p>
-{% else %}
-    <p> Not logged</p>
-{% endif %}
+<header>
+
+    <div style="text-align: center" id="iscte_header">
+        <div class="iscte_header_inline_display">
+
+        <img style="vertical-align: middle" src="{% static 'votacao/images/iscte_logo.jpeg' %}">
+        <span>ISCTE - Instituto Universitário de Lisboa</span>
+
+        </div>
+
+    </div>
+
+
+
+    <div style="text-align: right" id="iscte_header">
+        <div style="text-align: right" class="welcome_inline_display">
+            <img width="80px" height="80px" style="vertical-align: middle" src="{% static 'votacao/images/person_empty_holder.png' %}">
+            {% csrf_token %}
+            {% if request.session.userid %}
+                <span> Bem-vindo, <a href="{% url 'votacao:dashboard' %}"> {{ request.session.userid }}</a> </span>
+                <!--   , já votaste-te <b>{{ aluno.votos }}</b> vezes </p> -->
+
+            {% else %}
+                <span> Bem-vindo utilizador</span>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+
+
+{#    <form method="post" enctype="multipart/form-data" action="{% url 'votacao:fazer_upload' %}">#}
+{#        {% csrf_token %}#}
+{#        <input type="file" name="myfile">#}
+{#        <input type="submit" value="Upload">#}
+{#    </form>#}
+{#    {% if uploaded_file_url %}#}
+{#        <p>Feito o upload para:#}
+{#            <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a>#}
+{#        </p>#}
+{#    {% endif %}#}
+{##}
+{#    <p><a href="{% url 'votacao:index' %}"> Voltar ao inicio</a></p>#}
+
+</header>
+
+<nav class="link_bar">
+    <a href="{% url 'votacao:index' %}">Home</a>
+    {% csrf_token %}
+            {% if request.session.userid %}
+                <a href="{% url 'votacao:dashboard' %}">Perfil</a>
+                <a href="{% url 'votacao:logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'votacao:login' %}">Login</a>
+                <a href={% url 'votacao:novouser' %}>Regista-te</a>
+            {% endif %}
+
+</nav>
+
+
 
 
 {% if latest_question_list %}
