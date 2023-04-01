@@ -9,6 +9,10 @@
 #iscte_header{
     padding-bottom: 20px;
     horiz-align: center;
+    background-color: #333;
+    color: #fff;
+    width:100%;
+
 }
 
 .iscte_header_inline_display{
@@ -30,8 +34,77 @@
     padding: 20px;
     font-size: x-large;
     text-align: left;
+    background-color: #D3D3D3;
+    color: #D3D3D3;
+    width:100%;
 }
 
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  font-size: 11px;
+  position: absolute;
+  bottom: 0;
+  width:100%;
+}
 
+.iscte_footer_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.iscte_footer_container_links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.iscte_footer_container_links li {
+  display: inline-block;
+  margin-right: 20px;
+  margin:0;
+  padding:0;
+}
+
+.iscte_footer_container_links a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.iscte_footer_container_location p {
+  text-align: right;
+  margin: 0;
+  padding:0;
+}
+
+.containerForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+    text-align: center;
+  font-size: 36px;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+    text-align: center;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-pic{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: block;
+}
 
 

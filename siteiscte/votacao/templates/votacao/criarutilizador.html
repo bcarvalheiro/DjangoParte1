@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Novo Utilizador</title>
-</head>
-<body>
+{% extends "votacao/header.html" %}
+{% block content %}
+
+
 <h1>Criar um novo utilizador</h1>
-<form class="criaruser"  method="post" action="{% url 'votacao:novouser' %}">
+<div class="containerForm">
+<form class="criaruser"  method="post" action="{% url 'votacao:novouser' %}" enctype="multipart/form-data">
   {% csrf_token %}
 <fieldset>
+  <label for="avatar">ProfilePic:</label>
+  <input type="file" id="avatar" name="avatar" accept="image/gif, image/jpg, image/jpeg, image/png"><br>
   <label for="username">Username:</label><br>
   <input type="text" id="username" name="username"><br>
   <label for="password">Password:</label><br>
@@ -21,9 +21,9 @@
   <input type="text" id="grupo_trab" name="grupo_trab"><br>
   <label for="curso">Curso:</label><br>
   <input type="text" id="curso" name="curso"><br>
-  <input type="submit" value="Registar">
 </fieldset>
-</form>
+<input type="submit" value="Registar">
+</form><br>
 
-</body>
-</html>
+</div>
+{% endblock %}

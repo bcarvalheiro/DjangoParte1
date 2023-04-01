@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Bem-vindo. Efetua Login</title>
-</head>
-<body>
+{% extends "votacao/header.html" %}
+{% block content %}
 <h1> Login </h1>
+<div class="containerForm">
 <form class="login"  method="post" action="{% url 'votacao:login' %}">
   {% csrf_token %}
 <fieldset>
@@ -13,9 +9,10 @@
   <input type="text" id="username" name="username"><br>
   <label for="password">Password:</label>
   <input type="password" id="password" name="password"><br>
-  <input type="submit" value="Login">
 </fieldset>
+<input type="submit" value="Login">
 </form>
 
-</body>
-</html>
+</div>
+
+{% endblock %}

@@ -33,3 +33,6 @@ class Aluno(models.Model):
     votos = models.IntegerField(default=0)
     nome_completo = models.CharField(max_length=200)
     grupo_trab = models.IntegerField()
+    avatar = models.ImageField(upload_to='avatars/', blank=True)
+
+

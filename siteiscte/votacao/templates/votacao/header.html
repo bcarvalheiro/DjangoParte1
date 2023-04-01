@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Votações</title>
+      {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'votacao/css/mystyle.css' %}">
+</head>
+<header>
+
+    <div style="text-align: center" id="iscte_header">
+        <div class="iscte_header_inline_display">
+        <img style="vertical-align: middle" src="{% static 'votacao/images/iscte_logo.jpeg' %}">
+        <span>ISCTE - Instituto Universitário de Lisboa</span>
+        </div>
+        <div style="text-align: right" class="welcome_inline_display">
+            <img width="80px" height="80px" style="vertical-align: middle" src= "{{ aluno.avatar }}" >
+            {% csrf_token %}
+            {% if request.session.userid %}
+                <span> Bem-vindo, <a href="{% url 'votacao:dashboard' %}"> {{ request.session.userid }}</a> </span>
+                <!--   , já votaste-te <b>{{ aluno.votos }}</b> vezes </p> -->
+            {% else %}
+                <span> Bem-vindo utilizador</span>
+            {% endif %}
+        </div>
+    </div>
+    </header>
+<nav class="link_bar">
+    <a href="{% url 'votacao:index' %}">Home</a>
+    {% csrf_token %}
+            {% if request.session.userid %}
+                <a href="{% url 'votacao:dashboard' %}">Perfil</a>
+                <a href="{% url 'votacao:logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'votacao:login' %}">Login</a>
+                <a href="{% url 'votacao:novouser' %}">Regista-te</a>
+            {% endif %}
+</nav>
+</header>
+<body>
+
+{% block content %}
+{% endblock content %}
+</body>
+<footer>
+  <div class="iscte_footer_container">
+    <div class="iscte_footer_container_links">
+      <ul>
+        <li><a href="https://www.iscte-iul.pt/">ISCTE-IUL Oficial</a></li>
+      </ul>
+    </div>
+    <div class="iscte_footer_container_location">
+        <p>Iscte – Instituto Universitário de Lisboa</p><br>
+        <p>venida das Forças Armadas, 1649-026 Lisboa</p><br>
+        <p>TEL +351 217 903 000</p><br>
+        <p><a href="mailto:geral@iscte.pt">geral@iscte.pt</a></p><br>
+        <p>Contacte-nos</p>
+    </div>
+  </div>
+</footer>
+</html>
+
+

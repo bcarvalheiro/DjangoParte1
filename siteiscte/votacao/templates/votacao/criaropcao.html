@@ -1,19 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Criar Opção</title>
-</head>
-<body>
+{% extends "votacao/header.html" %}
 
-<h1>ISCTE - Instituto Universitário de Lisboa</h1>
-<h2>Criar nova opção</h2>
-Questão : {{ questao.questao_texto }}
-
+{% block content %}
+<h1>Criar nova opção</h1>
 {% if error_message %}
     <p><strong>{{error_message}}</strong></p>
 {% endif %}
 
+<h2>Questão : {{ questao.questao_texto }}</h2>
+<div class="containerForm">
 <form class="criaropcao"  method="post" action="{% url 'votacao:criaropcao' questao.id %}">
   {% csrf_token %}
 <fieldset>
@@ -22,10 +16,5 @@ Questão : {{ questao.questao_texto }}
   <input type="submit" value="Gravar nova Opção">
 </fieldset>
 </form>
-
-<a href="{% url 'votacao:index' %}">
-    <input type="button" value="Voltar">
-</a>
-
-</body>
-</html>
+</div>
+{%endblock content %}

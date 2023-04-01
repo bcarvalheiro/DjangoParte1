@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-cl6byd1f)vq4hn52%78^+cfefgnr!zl5#_k*i12zh+9rcoxkb5
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
+LOGIN_URL = "/votacao/login"
+LOGIN_REDIRECT_URL = "/votacao/login"
 # Application definition
 
 INSTALLED_APPS = [
@@ -122,7 +122,7 @@ STATIC_URL = 'static/'
 
 # Media
 MEDIA_URL= '/votacao/static/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'votacao/static/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, '/votacao/static/media/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

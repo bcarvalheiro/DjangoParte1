@@ -2,13 +2,13 @@ from django.urls import include, path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-# O import apartir de . significa que importa views da mesma diretoria
 
 # Quando invocado o url "" o django procura e executa a função index em views.py
 app_name = 'votacao'
 
-urlpatterns = [
 
+
+urlpatterns = [
     #ex: votacao&
     path("", views.index, name="index"),
     #ex: votacao/1

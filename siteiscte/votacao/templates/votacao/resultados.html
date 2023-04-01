@@ -1,23 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Resultados da Votação</title>
-</head>
-<body>
-<h1>ISCTE - Instituto Universitário de Lisboa</h1>
-<h2>{{questao.questao_texto}}</h2>
+{% extends "votacao/header.html" %}
+{% block content %}
+<h1>Resultado da votação</h1>
+<h2>Questao: {{questao.questao_texto}}</h2>
+<div class="containerForm">
+<form>
+<fieldset>
 <ul>
     {% for opcao in questao.opcao_set.all %}
     <li>{{opcao.opcao_texto}} -- {{opcao.votos}} voto{{opcao.votos|pluralize}}</li>
-    {% endfor %}}
+    {% endfor %}
 </ul>
-<a href="{% url 'votacao:detalhe' questao.id %}"> Votar novamente? </a>
-
+</fieldset>
+    <div class="btn-wrapper"
+<a href="{% url 'votacao:detalhe' questao.id %}">
+    <input type="button" value="Votar novamente?">
+</a>
 <a href="{% url 'votacao:index' %}">
     <input type="button" value="Voltar">
 </a>
-
-
-</body>
-</html>
+    </div>
+</form>
+    </div>
+{% endblock %}

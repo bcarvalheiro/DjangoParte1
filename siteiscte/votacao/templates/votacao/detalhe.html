@@ -1,45 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Pergunta</title>
-</head>
-<body>
-<h1>ISCTE - Instituto Universitário de Lisboa</h1>
+{% extends "votacao/header.html" %}
 
-<h2> {{ questao.questao_texto }}</h2>
+{% block content %}
+<h1>Detalhe</h1>
+<h2>Questao: {{ questao.questao_texto }}</h2>
 {% if error_message %}
-    <p><strong>{{error_message}}</strong></p>
+    <h2>{{error_message}}</h2>
 {% endif %}
+<div class="containerForm">
+    <fieldset>
+        <form action= "{% url 'votacao:voto' questao.id %}" method="post">
+            {% csrf_token %}
+            {% for opcao in questao.opcao_set.all %}
+                <input type= "radio" name= "opcao" id= "opcao{{ forloop.counter }}" value= "{{ opcao.id }}"/>
+                <label for="opcao{{ forloop.counter }}">
+                    {{ opcao.opcao_texto }}
+                    {% if request.user.is_superuser %}
+                    <a href="{% url 'votacao:eliminaropcao' questao.id opcao.id %}" title ="Eliminar">x</a>
+                    {% endif %}
+                </label>
+                <br/>
+            {% endfor %}
+            <input type="submit" value="Voto"/>
+        <br>
+        </form>
 
-<form action= "{% url 'votacao:voto' questao.id %}" method="post">
-    {% csrf_token %}
-    {% for opcao in questao.opcao_set.all %}
-        <input type= "radio" name= "opcao" id= "opcao{{ forloop.counter }}" value= "{{ opcao.id }}"/>
-        <label for="opcao{{ forloop.counter }}">
-            {{ opcao.opcao_texto }}
-            <a href="{% url 'votacao:eliminaropcao' questao.id opcao.id %}" title ="Eliminar">x</a>
-        </label>
-        <br/>
-    {% endfor %}
-    <input type="submit" value="Voto"/>
-</form>
-<br>
-<a href="{% url 'votacao:criaropcao' questao.id %}">
-    <input type="button" value="Criar nova Opção">
-</a>
+    </fieldset>
+    <div class="btn-wrapper">
 
-<a href="{% url 'votacao:index' %}">
-    <input type="button" value="Voltar">
-</a>
-<br>
-<a href="{% url 'votacao:eliminar' questao.id %}">
-    <input type="button" value="Eliminar">
-</a>
-
-
-
-
-
-</body>
-</html>
+    {% if request.user.is_superuser %}
+        <a href="{% url 'votacao:criaropcao' questao.id %}">
+            <input type="button" value="Criar nova Opção">
+        </a>
+        <br>
+        <a href="{% url 'votacao:eliminar' questao.id %}">
+            <input type="button" value="Eliminar">
+        </a>
+     {% endif %}
+    </div>
+</div>
+{% endblock %}
