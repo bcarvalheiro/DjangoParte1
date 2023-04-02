@@ -1,34 +1,32 @@
 {% extends "votacao/header.html" %}
+{% load static %}
 {% block content %}
-{%load static %}
-<h1>Dashboard</h1>
-<div class="containerForm">
-     {% if userPage.is_authenticated %}
-        <form class="criaruser"  method="post" action="{% url 'votacao:index' %}">
-        {% csrf_token %}
-          <fieldset>
-          {% if not userPage.aluno.avatar == "" %}
-                <img class="profile-pic" src="{{ user.aluno.avatar }}" alt="Profile Picture" >
-          {% else %}
-                <img class="profile-pic" src="{% static 'votacao/images/person_empty_holder.png' %}" alt="Default avatar">
-          {% endif %}
-          <label for="username">Username:</label><br>
-          <input type="text" id="username" name="username" value = {{ userPage }} disabled><br>
-          <label for="nome_completo">Nome completo:</label><br>
-          <input type="text" id="nome_completo" name="nome_completo" value = "{{ userPage.aluno.nome_completo }}" disabled><br>
-          <label for="email">Email:</label><br>
-          <input type="text" id="email" name="email" value = "{{ userPage.email }}" disabled><br>
-          <label for="grupo_trab">Grupo de Trabalho:</label><br>
-          <input type="text" id="grupo_trab" name="grupo_trab" value = "{{ userPage.aluno.grupo_trab }}" disabled><br>
-          <label for="curso">Curso:</label><br>
-          <input type="text" id="curso" name="curso" value = "{{ userPage.aluno.curso }}" disabled><br>
-          <label for="votos">Votos:</label><br>
-          <input type="text" id="votos" name="votos" value= "{{ userPage.aluno.votos }}" disabled ><br><br><br>
-          <input type="submit" value="Voltar">
-    {%else %}
-          <h2>Utilizador não autenticado</h2>
+    <h1>Dashboard</h1>
+    {% if userPage.is_authenticated %}
+        <form class="containerForm" method="post" action="{% url 'votacao:dashboard' %}">
+            {% csrf_token %}
+            <fieldset>
+                {% if userPage.aluno.avatar %}
+                    <img class="profile-pic" src="{{ userPage.aluno.avatar }}" alt="Profile Picture">
+                {% else %}
+                    <img class="profile-pic" src="{% static 'votacao/images/person_empty_holder.png' %}" alt="Default avatar">
+                {% endif %}
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" value="{{ userPage.username }}" disabled><br>
+                <label for="nome_completo">Nome completo:</label><br>
+                <input type="text" id="nome_completo" name="nome_completo" value="{{ userPage.aluno.nome_completo }}" disabled><br>
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email" value="{{ userPage.email }}" disabled><br>
+                <label for="grupo_trab">Grupo de Trabalho:</label><br>
+                <input type="text" id="grupo_trab" name="grupo_trab" value="{{ userPage.aluno.grupo_trab }}" disabled><br>
+                <label for="curso">Curso:</label><br>
+                <input type="text" id="curso" name="curso" value="{{ userPage.aluno.curso }}" disabled><br>
+                <label for="votos">Votos:</label><br>
+                <input type="text" id="votos" name="votos" value="{{ userPage.aluno.votos }}" disabled><br><br><br>
+                <input type="submit" value="Voltar">
+            </fieldset>
+        </form>
+    {% else %}
+        <h2>Utilizador não autenticado</h2>
     {% endif %}
-        </fieldset>
-</form>
-</div>
 {% endblock %}
