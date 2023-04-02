@@ -19,13 +19,17 @@ def check_superuser(user):
 
 @login_required
 def index(request):
+
     latest_question_list = Questao.objects.order_by('-pub_data')
     user = request.user
+
     try:
         aluno = user.aluno
+
         context = {'latest_question_list': latest_question_list, 'aluno': aluno}
     except Aluno.DoesNotExist:
         context = {'latest_question_list': latest_question_list}
+
 
     context = {'latest_question_list': latest_question_list}
     return render(request, 'votacao/index.html', context)
@@ -67,9 +71,9 @@ def voto(request, questao_id):
 
 @user_passes_test(check_superuser)
 def criarquestao(request):
+
     if request.method == 'POST':
-        userid = request.user.username
-        userPage = User.objects.get(username=userid)
+
         if not request.POST['questao_texto']:
             return render(request, 'votacao/criarquestao.html',
                               {'error_message': 'Preencha o campo antes de submeter.'})
@@ -89,6 +93,7 @@ def eliminar(request, questao_id):
 
 @user_passes_test(check_superuser)
 def criaropcao(request, questao_id):
+
     questao = get_object_or_404(Questao, pk=questao_id)
     if request.method == 'POST':
         opcao_texto = request.POST.get('opcao_texto', '').strip()
@@ -111,14 +116,14 @@ def eliminaropcao(request, questao_id, opcao_id):
 
 def login(request):
     latest_question_list = Questao.objects.order_by('-pub_data')
+    header(request)
     if request.method == 'POST':
         try:
             password = request.POST['password']
             userid = request.POST['username']
             user = authenticate(username=userid, password=password)
             if user is not None:
-                userPage = User.objects.get(username=userid)
-                context = {'latest_question_list': latest_question_list, 'userPage': userPage}
+                context = {'latest_question_list': latest_question_list}
                 auth_login(request, user)
                 request.session['userid'] = user.username
                 return render(request, 'votacao/index.html', context)
@@ -134,12 +139,22 @@ def login(request):
 def dashboard(request):
     userid = request.user.username
     userPage = User.objects.get(username=userid)
+
     return render(request, 'votacao/dashboard.html', {'userPage': userPage})
 
+
+
 def header(request):
+
     userid = request.user.username
-    userPage = User.objects.get(username=userid)
-    return render(request, 'votacao/header.html', {'userPage': userPage})
+    print("Header")
+    if userid:
+        print("userPage")
+        userPage = User.objects.get(username=userid)
+        avatar = (userPage.aluno.avatar)
+    else :
+        avatar = ''
+    return render(request, 'votacao/header.html', {'avatar': avatar})
 
 
 def novouser(request):
@@ -160,12 +175,14 @@ def novouser(request):
             fs = FileSystemStorage()
             filename = fs.save(avatar.name, avatar)
             uploaded_file_url = fs.url(filename)
-            aluno.avatar = uploaded_file_url
+            # had to remove first '/' because of linux
+            aluno.avatar = uploaded_file_url[1:]
             aluno.save()
         else:
             default_image = 'votacao/images/person_empty_holder.png'
             fs = FileSystemStorage()
             uploaded_file_url = fs.url(default_image)
+            # had to remove first '/' because of linux
             aluno.avatar = uploaded_file_url
             aluno.save()
         if aluno.pk is not None:

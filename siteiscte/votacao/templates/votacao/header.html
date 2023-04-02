@@ -16,9 +16,9 @@
         <div style="text-align: right" class="welcome_inline_display">
             {% csrf_token %}
 
-            {% if request.session.userid and userPage.aluno.avatar != "" %}
-                <img class="profile-pic" src= "{{userPage.aluno.avatar}}"  >
+            {% if request.session.userid and user.aluno.avatar != "" %}
 
+                <img class="profile-pic" src= "{{user.aluno.avatar}}"  >
 
 
             {% else  %}

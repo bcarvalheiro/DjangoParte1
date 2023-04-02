@@ -8,7 +8,7 @@
         {% csrf_token %}
           <fieldset>
           {% if not userPage.aluno.avatar == "" %}
-                <img class="profile-pic" src="{{ userPage.aluno.avatar }}" alt="Profile Picture" >
+                <img class="profile-pic" src="{{ user.aluno.avatar }}" alt="Profile Picture" >
           {% else %}
                 <img class="profile-pic" src="{% static 'votacao/images/person_empty_holder.png' %}" alt="Default avatar">
           {% endif %}
