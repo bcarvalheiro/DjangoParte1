@@ -1,4 +1,3 @@
-from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
@@ -10,6 +9,7 @@ from django.contrib.auth.models import User, AnonymousUser
 from .models import Questao, Opcao, Aluno
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 
 
 
@@ -136,6 +136,11 @@ def dashboard(request):
     userPage = User.objects.get(username=userid)
     return render(request, 'votacao/dashboard.html', {'userPage': userPage})
 
+def header(request):
+    userid = request.user.username
+    userPage = User.objects.get(username=userid)
+    return render(request, 'votacao/header.html', {'userPage': userPage})
+
 
 def novouser(request):
     if request.method == 'POST':
@@ -175,7 +180,7 @@ def logout(request):
 
 
 def fazer_upload(request):
-    if request.method == 'POST' and request.FILES.get('myfile') is not None:
+    if request.method == 'POST' and request.FILES.get('myfile'):
         myfile = request.FILES['myfile']
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)

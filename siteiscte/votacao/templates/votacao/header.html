@@ -14,14 +14,23 @@
         <span>ISCTE - Instituto Universitário de Lisboa</span>
         </div>
         <div style="text-align: right" class="welcome_inline_display">
-            <img class="profile-pic" src= "{% static 'votacao/images/person_empty_holder.png' %}" >
             {% csrf_token %}
+
+            {% if request.session.userid and userPage.aluno.avatar != "" %}
+                <img class="profile-pic" src= "{{userPage.aluno.avatar}}"  >
+
+
+
+            {% else  %}
+                <img class="profile-pic" src= "{% static 'votacao/images/person_empty_holder.png' %}" >
+            {% endif %}
+
             {% if request.session.userid %}
                 <span> Bem-vindo, <a href="{% url 'votacao:dashboard' %}"> {{ request.session.userid }}</a> </span>
-                <!--   , já votaste-te <b>{{ aluno.votos }}</b> vezes </p> -->
-            {% else %}
+            {% else  %}
                 <span> Bem-vindo utilizador</span>
             {% endif %}
+
         </div>
     </div>
     </header>

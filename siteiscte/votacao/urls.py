@@ -21,11 +21,12 @@ urlpatterns = [
     path('<int:questao_id>/criaropcao', views.criaropcao, name='criaropcao'),
     path('login', views.login, name='login'),
     path('dashboard', views.dashboard, name='dashboard'),
+    path('header', views.header, name='header'),
     path('novouser', views.novouser, name='novouser'),
     path('logout', views.logout, name='logout'),
     path('<int:questao_id>/eliminar', views.eliminar, name='eliminar'),
     path('<int:questao_id>/eliminaropcao/<int:opcao_id>', views.eliminaropcao, name='eliminaropcao'),
-    path('fazer_upload', views.fazer_upload, name='fazer_upload')
+    path('fazer_upload', views.fazer_upload, name='fazer_upload'),
 ]
 
 if settings.DEBUG:
