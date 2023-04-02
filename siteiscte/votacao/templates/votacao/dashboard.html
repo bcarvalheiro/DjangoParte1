@@ -23,10 +23,10 @@
                 <input type="text" id="curso" name="curso" value="{{ userPage.aluno.curso }}" disabled><br>
                 <label for="votos">Votos:</label><br>
                 <input type="text" id="votos" name="votos" value="{{ userPage.aluno.votos }}" disabled><br><br><br>
-                <input type="submit" value="Voltar">
+
             </fieldset>
         </form>
     {% else %}
         <h2>Utilizador não autenticado</h2>
     {% endif %}
-{% endblock %}
+{% endblock content %}
