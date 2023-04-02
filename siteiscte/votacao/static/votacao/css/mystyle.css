@@ -40,20 +40,19 @@
 }
 
 footer {
-  display: flex;
   background-color: #333;
   color: #fff;
   padding: 20px;
   font-size: 11px;
-  position: relative; /* changed from absolute */
-  width: 100%;
+  position: absolute;
+  bottom: 0;
+  width:100%;
 }
 
 .iscte_footer_container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position:relative;
 }
 
 .iscte_footer_container_links ul {
@@ -65,8 +64,8 @@ footer {
 .iscte_footer_container_links li {
   display: inline-block;
   margin-right: 20px;
-  margin: 0;
-  padding: 0;
+  margin:0;
+  padding:0;
 }
 
 .iscte_footer_container_links a {
@@ -77,16 +76,13 @@ footer {
 .iscte_footer_container_location p {
   text-align: right;
   margin: 0;
-  padding: 0;
+  padding:0;
 }
 
 .containerForm {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 60px; /* added margin to prevent content from being covered by footer */
-  margin-top:60px;
-    position: fixed;
 }
 
 h1 {
