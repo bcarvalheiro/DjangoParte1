@@ -8,6 +8,10 @@
 </head>
 <header>
 
+<script src={% static 'votacao/js/votacao.js' %}> </script>
+
+
+
     <div style="text-align: center" id="iscte_header">
         <div class="iscte_header_inline_display">
         <img style="vertical-align: middle" width="500px" src="{% static 'votacao/images/iscte_logo_no_back.png' %}">
@@ -18,7 +22,7 @@
 
             {% if request.session.userid and user.aluno.avatar != "" %}
 
-                <img class="profile-pic" src= "{{user.aluno.avatar}}"  >
+                <img id="avatar" class="profile-pic" ondblclick="hideAvatar()" src= "{{user.aluno.avatar}}"  >
 
 
             {% else  %}
@@ -26,7 +30,8 @@
             {% endif %}
 
             {% if request.session.userid %}
-                <span> Bem-vindo, <a href="{% url 'votacao:dashboard' %}"> {{ request.session.userid }}</a> </span>
+                <span> Bem-vindo </span>
+                <span onclick="showAvatar()"> {{ request.session.userid }} </span>
                 <span>, votou {{ user.aluno.votos }} vezes.</a> </span>
             {% else  %}
                 <span> Bem-vindo utilizador</span>
@@ -62,7 +67,7 @@
     </div>
     <div class="iscte_footer_container_location">
         <p>Iscte – Instituto Universitário de Lisboa</p><br>
-        <p>venida das Forças Armadas, 1649-026 Lisboa</p><br>
+        <p>Avenida das Forças Armadas, 1649-026 Lisboa</p><br>
         <p>TEL +351 217 903 000</p><br>
         <p><a href="mailto:geral@iscte.pt">geral@iscte.pt</a></p><br>
         <p>Contacte-nos</p>

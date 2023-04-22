@@ -1,18 +1,17 @@
 {% extends "votacao/header.html" %}
 {% block content %}
 {% if latest_question_list %}
-<ul>
-    {% for questao in latest_question_list %}
-    <li>
-        <a href="{% url 'votacao:detalhe' questao.id %}">
-            {{ questao.questao_texto }}
-        </a>
-
-    </li>
-    {% endfor %}
-</ul>
+    <ul id="question_list" style="display: none">
+        {% for questao in latest_question_list %}
+            <li>
+                <a href="{% url 'votacao:detalhe' questao.id %}">
+                    {{ questao.questao_texto }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
 {% else %}
-<p>Não há questões a apresentar</p>
+    <p>Não há questões a apresentar</p>
 {% endif %}
 
 {% if request.session.userid %}
@@ -20,5 +19,6 @@
     <input type="button" value="Criar nova questao">
     </a>
 {% endif %}
+    <input id="toggle_question_list_button" onclick="toggleQuestionList()" type="button" value="Mostrar lista de Questões">
 
 {% endblock content %}
