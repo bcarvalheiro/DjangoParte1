@@ -27,6 +27,10 @@ urlpatterns = [
     path('<int:questao_id>/eliminar', views.eliminar, name='eliminar'),
     path('<int:questao_id>/eliminaropcao/<int:opcao_id>', views.eliminaropcao, name='eliminaropcao'),
     path('fazer_upload', views.fazer_upload, name='fazer_upload'),
+    path('api/questoes/', views.questoes_lista),
+    path('api/questoes/<int:pk>', views.questoes_edita),
+    path('api/opcoes/', views.opcoes_lista),
+    path('api/opcoes/<int:pk>', views.opcoes_edita),
 ]
 
 if settings.DEBUG:

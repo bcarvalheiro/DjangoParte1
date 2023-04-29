@@ -10,7 +10,12 @@ from .models import Questao, Opcao, Aluno
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status, request
+from .serializers import *
+from .models import Questao, Opcao
+from ..test_db import questao
 
 
 def check_superuser(user):
@@ -19,7 +24,6 @@ def check_superuser(user):
 
 @login_required
 def index(request):
-
     latest_question_list = Questao.objects.order_by('-pub_data')
     user = request.user
 
@@ -29,7 +33,6 @@ def index(request):
         context = {'latest_question_list': latest_question_list, 'aluno': aluno}
     except Aluno.DoesNotExist:
         context = {'latest_question_list': latest_question_list}
-
 
     context = {'latest_question_list': latest_question_list}
     return render(request, 'votacao/index.html', context)
@@ -71,12 +74,11 @@ def voto(request, questao_id):
 
 @user_passes_test(check_superuser)
 def criarquestao(request):
-
     if request.method == 'POST':
 
         if not request.POST['questao_texto']:
             return render(request, 'votacao/criarquestao.html',
-                              {'error_message': 'Preencha o campo antes de submeter.'})
+                          {'error_message': 'Preencha o campo antes de submeter.'})
         else:
             Questao(questao_texto=request.POST['questao_texto'], pub_data=timezone.now()).save()
             return HttpResponseRedirect(reverse('votacao:index'))
@@ -93,7 +95,6 @@ def eliminar(request, questao_id):
 
 @user_passes_test(check_superuser)
 def criaropcao(request, questao_id):
-
     questao = get_object_or_404(Questao, pk=questao_id)
     if request.method == 'POST':
         opcao_texto = request.POST.get('opcao_texto', '').strip()
@@ -143,16 +144,14 @@ def dashboard(request):
     return render(request, 'votacao/dashboard.html', {'userPage': userPage})
 
 
-
 def header(request):
-
     userid = request.user.username
     print("Header")
     if userid:
         print("userPage")
         userPage = User.objects.get(username=userid)
         avatar = (userPage.aluno.avatar)
-    else :
+    else:
         avatar = ''
     return render(request, 'votacao/header.html', {'avatar': avatar})
 
@@ -204,3 +203,68 @@ def fazer_upload(request):
         uploaded_file_url = fs.url(filename)
         return render(request, 'votacao/fazer_upload.html', {'uploaded_file_url': uploaded_file_url})
     return render(request, 'votacao/fazer_upload.html')
+
+
+@api_view(['GET', 'POST'])
+def questoes_lista(request):
+    if request.method == 'GET':
+        questoes = Questao.objects.all()
+        serializerQ = QuestaoSerializer(questoes, context={'request': request}, many=True)
+        return Response(serializerQ.data)
+    elif request.method == 'POST':
+        serializer = QuestaoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT', 'DELETE'])
+def questoes_edita(request, pk):
+    try:
+        questao = Questao.objects.get(pk=pk)
+    except Questao.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = QuestaoSerializer(questao, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        questao.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET', 'POST'])
+def opcoes_lista(request):
+    if request.method == 'GET':
+        opcoes = Opcao.objects.all()
+        serializerO = OpcaoSerializer(opcoes, context={'request': request}, many=True)
+        return Response(serializerO.data)
+    elif request.method == 'POST':
+        serializer = OpcaoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT', 'DELETE'])
+def opcoes_edita(request, pk):
+    try:
+        opcao = Opcao.objects.get(pk=pk)
+    except Opcao.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'PUT':
+        serializer = OpcaoSerializer(opcao, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            opcao.votos = opcao.votos + 1
+            opcao.save()
+            # serializer.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        opcao.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
