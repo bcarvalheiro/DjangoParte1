@@ -5,7 +5,7 @@ function Header() {
         <>
             <div className="text-center">
                 <img
-                    src="https://keystoneacademicres.cloudinary.com/image/upload/q_auto,f_auto,w_743,c_limit/element/11/111948_2.jpg"
+                    src={require('./iscte_logo_no_back.png')}
                     width="300"
                     alt="ISCTE"
                     className="img-thumbnail"

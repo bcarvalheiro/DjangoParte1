@@ -15,7 +15,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status, request
 from .serializers import *
 from .models import Questao, Opcao
-from ..test_db import questao
+
 
 
 def check_superuser(user):
